@@ -5,6 +5,11 @@
   I2C device found at address 0x48
   I2C device found at address 0x6A
 
+  USBCDCON BOOT : ENABLED
+  FLASH SIZE    : 16MB
+  PSRAM         : OPI PSRAM
+  
+
 *********/
 
 #include "esp_camera.h"
