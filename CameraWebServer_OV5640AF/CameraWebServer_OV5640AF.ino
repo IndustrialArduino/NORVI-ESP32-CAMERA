@@ -9,8 +9,8 @@
 // ===========================
 // Enter your WiFi credentials
 // ===========================
-const char* ssid = "ICONIC DEVICES (PVT) LTD";
-const char* password = "bb2057756";
+const char* ssid = "**************";
+const char* password = "****************";
 
 OV5640 ov5640 = OV5640();
 
