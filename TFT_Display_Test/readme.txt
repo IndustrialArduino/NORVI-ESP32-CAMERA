@@ -8,6 +8,7 @@ The code relies on two libraries for controlling the TFT display and SPI communi
 
 TFT_eSPI Library:
 This library provides an efficient way to control TFT displays. It supports various types of displays and includes functions for drawing shapes, text, and images.
+https://github.com/IndustrialArduino/NORVI-ESP32-CAMERA/blob/2cdc9e4bf35bfe05fbdf0871fa1c9219eab5530c/Libraries/TFT_eSPI.zip
 
 SPI Library:
 The SPI (Serial Peripheral Interface) library is included by default with the Arduino IDE. It provides communication with SPI devices, such as the TFT display.
