@@ -21,17 +21,17 @@ void setup() {
   tft.fillScreen(TFT_BLACK);  // Clear the display
 
   // Draw some test graphics
-  tft.fillRect(0, 0, 320, 240, TFT_RED);
+  tft.fillRect(0, 0, 320, 240, TFT_RED);   //(x coordinate, y coordinate, width of the rectangle, height of the rectangle, color used to fill the rectangle)
   delay(1000);
-  tft.fillRect(0, 0, 320, 320, TFT_GREEN);
+  tft.fillRect(0, 0, 320, 240, TFT_GREEN);
   delay(1000);
-  tft.fillRect(0, 0, 320, 320, TFT_BLUE);
+  tft.fillRect(0, 0, 320, 240, TFT_BLUE);
   delay(1000);
-  tft.fillRect(0, 0, 320, 320, TFT_ORANGE);
+  tft.fillRect(0, 0, 320, 240, TFT_ORANGE);
   delay(1000);
-  tft.fillRect(0, 0, 320, 320, TFT_WHITE);
+  tft.fillRect(0, 0, 320, 240, TFT_WHITE);
   delay(1000);
-  tft.fillRect(0, 0, 320, 320, TFT_CYAN);
+  tft.fillRect(0, 0, 320, 240, TFT_CYAN);
   delay(1000);
   tft.fillScreen(TFT_BLACK);  // Clear the display
 
@@ -45,7 +45,9 @@ void setup() {
   delay(1000);
   tft.fillScreen(TFT_BLACK);  // Clear the display
 
-  tft.fillRect((320 - 220) / 2, (240 - 220) / 2, 220, 220, TFT_WHITE);
+  // (320 - 220) / 2 = x coordinate,
+  // (240 - 220) / 2 = y coordinate,
+  tft.fillRect((320 - 220) / 2, (240 - 220) / 2, 220, 220, TFT_WHITE); //(x coordinate, y coordinate, width of the rectangle, height of the rectangle, color used to fill the rectangle)
   delay(1000);
   tft.fillRect((320 - 195) / 2, (240 - 195) / 2, 195, 195, TFT_RED);
   delay(1000);
@@ -58,7 +60,8 @@ void setup() {
   tft.fillScreen(TFT_BLACK);  // Clear the display
 
   // Draw a circle
-  tft.fillCircle(160, 120, 100, TFT_YELLOW);
+  tft.fillCircle(160, 120, 100, TFT_YELLOW);  //(x coordinate of the center of the circle , y coordinate of the center of the circle, Radius of the circle, color used to fill the circle)
+  delay(1000);
   delay(1000);
   tft.fillCircle(160, 120, 100, TFT_RED);
   delay(1000);
