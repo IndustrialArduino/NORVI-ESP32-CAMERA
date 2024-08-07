@@ -45,7 +45,7 @@ void setup() {
   delay(1000);
   tft.fillScreen(TFT_BLACK);  // Clear the display
 
-  // (320 - 220) / 2 = x coordinate,
+  // (320 - 220) / 2 = x coordinate.  220 = size of the rectangle. 
   // (240 - 220) / 2 = y coordinate,
   tft.fillRect((320 - 220) / 2, (240 - 220) / 2, 220, 220, TFT_WHITE); //(x coordinate, y coordinate, width of the rectangle, height of the rectangle, color used to fill the rectangle)
   delay(1000);
