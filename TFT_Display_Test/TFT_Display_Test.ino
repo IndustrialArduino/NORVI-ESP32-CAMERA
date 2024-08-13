@@ -62,7 +62,6 @@ void setup() {
   // Draw a circle
   tft.fillCircle(160, 120, 100, TFT_YELLOW);  //(x coordinate of the center of the circle , y coordinate of the center of the circle, Radius of the circle, color used to fill the circle)
   delay(1000);
-  delay(1000);
   tft.fillCircle(160, 120, 100, TFT_RED);
   delay(1000);
   tft.fillCircle(160, 120, 100, TFT_GREEN);
