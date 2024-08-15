@@ -20,17 +20,11 @@
  * SOFTWARE.
  */
 
-// These sketches are tested with 2.0.4 ESP32 Arduino Core
-// https://github.com/espressif/arduino-esp32/releases/tag/2.0.4
-
 /* Includes ---------------------------------------------------------------- */
 #include <S3_CAMERA_inferencing.h>
 #include "edge-impulse-sdk/dsp/image/image.hpp"
 #include "ESP32_OV5640_AF.h"
 #include "esp_camera.h"
-
-// Select camera model - find more camera models in camera_pins.h file here
-// https://github.com/espressif/arduino-esp32/blob/master/libraries/ESP32/examples/Camera/CameraWebServer/camera_pins.h
 
 // #define CAMERA_MODEL_ESP_EYE // Has PSRAM
 //#define CAMERA_MODEL_AI_THINKER // Has PSRAM
