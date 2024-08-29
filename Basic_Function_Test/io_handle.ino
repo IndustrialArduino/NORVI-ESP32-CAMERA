@@ -14,9 +14,14 @@ void config_io(){
   io.revert(3);
   io.pinMode(IO_TRIGGER, INPUT); io.pinMode(IO_LED_FLASH, OUTPUT); io.pinMode(IO_BUTTON_UP, INPUT_PULLUP); io.pinMode(IO_USER_LED, OUTPUT);
   
-
-
   attachInterrupt(IO_SWITCH, handleInterrupt, RISING);
+
+  ads.setGain(GAIN_TWOTHIRDS);  // 2/3x gain +/- 6.144V  1 bit = 3mV      0.1875mV (default)
+  
+  if (!ads.begin()) {
+    Serial.println("Failed to initialize ADS.");
+    while (1);
+  }
 
 }
 
@@ -60,4 +65,12 @@ void param_down(unsigned int *var,unsigned int *min){
   if (*var > *min) {
     *var -= 1;
   }
+}
+
+void read_battery(){
+adc0 = ads.readADC_SingleEnded(0);
+volts0 = ads.computeVolts(adc0*2);
+  if(serial_enable==1){
+    Serial.print("AIN0: "); Serial.print(adc0); Serial.print("  "); Serial.print(volts0); Serial.println("V");
+  }  
 }

@@ -12,7 +12,14 @@
 
   #include <Wire.h>
   #include <PCA9536D.h>
+  #include <Adafruit_ADS1X15.h>
+  
+  #include "FS.h"
+  #include "SD_MMC.h"
 
+  #define SD_CLK   39 // Clock pin
+  #define SD_CMD   38 // Command/Data pin
+  #define SD_DATA  40  // Data pin
 
   #define BQ25180_ADDR 0x6A  // I2C address of the bq25180
   #define CGCTRL_REG_ADDR 0x4
@@ -36,9 +43,12 @@
   unsigned int TRIGGER, SWITCH, B_UP, B_DOWN, TRIGGER_S, SWITCH_S, B_UP_S, B_DOWN_S ;
   unsigned int V_DELAY;
   volatile int count = 0;
+  int16_t adc0;
+  float volts0;
 
-
-PCA9536 io;
+  Adafruit_ADS1115 ads;
+  
+  PCA9536 io;
 
 void IRAM_ATTR handleInterrupt() {
   // Increase the count when interrupt occurs
@@ -49,7 +59,7 @@ void setup() {
   Serial.begin(115200);
 
   delay(5000);
-  serial_enable=0;
+  serial_enable=1;  // disable serial print by making serial_enable=0, to avoid mcu slow down. 
   
  
   Wire.begin(1,14); delay(100);
@@ -58,6 +68,9 @@ void setup() {
   delay(1000);
   config_io();            // Configure Inputs and Outputs on both ESP32 and PCA9536 IO Expander
   config_charger();       // Sets the charging current and input current limits
+
+  init_sdmmc(); delay(100);
+  test_sdmmc();
 
  io.digitalWrite(IO_LED_FLASH, HIGH);
  delay(1000);
@@ -82,6 +95,7 @@ void loop() {
 
   read_status();
   read_io();
+  read_battery();
 
   if(serial_enable==1)Serial.println(count);
 

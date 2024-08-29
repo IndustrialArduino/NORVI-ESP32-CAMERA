@@ -70,7 +70,7 @@ void read_status(){
 
 
 void config_charger(){
-  write_register(CGCTRL_REG_ADDR, 0x50);  //Serial.println("Charging Current Set to 530mA");
+  write_register(CGCTRL_REG_ADDR, 0x38);  //Serial.println("Charging Current Set to 290mA");
   delay(100);
   write_register(IC_CTRL, 0x04);  //Serial.println("Disable TS Auto");
   write_register(TMR_ILIM, 0x0D);  //Serial.println("Push button Long Press to 5s");
