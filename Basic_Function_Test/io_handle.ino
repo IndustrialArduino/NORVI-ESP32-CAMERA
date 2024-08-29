@@ -6,10 +6,14 @@ void config_io(){
       ;
   }
 
-  pinMode(46, INPUT_PULLUP);
-  pinMode(0, INPUT);
-  io.pinMode(0, INPUT); io.pinMode(1, OUTPUT); io.pinMode(2, INPUT); io.pinMode(3, OUTPUT);
-  io.digitalWrite(1, 0);
+  pinMode(IO_SWITCH, INPUT_PULLUP);
+  pinMode(IO_BUTTON_DOWN, INPUT_PULLUP);
+  io.revert(0);
+  io.revert(1);
+  io.revert(2);
+  io.revert(3);
+  io.pinMode(IO_TRIGGER, INPUT); io.pinMode(IO_LED_FLASH, OUTPUT); io.pinMode(IO_BUTTON_UP, INPUT_PULLUP); io.pinMode(IO_USER_LED, OUTPUT);
+  
 
 
   attachInterrupt(IO_SWITCH, handleInterrupt, RISING);
@@ -21,11 +25,10 @@ void read_io(){
   SWITCH = digitalRead(IO_SWITCH);
   B_UP = io.digitalRead(IO_BUTTON_UP);
   B_DOWN = digitalRead(IO_BUTTON_DOWN);
-//  if(B_UP==1)io.digitalWrite(1, LOW);
-//  if(B_UP==0)io.digitalWrite(1, HIGH);
 
+  if(serial_enable==1){
   Serial.print(" TRIGGER: ");Serial.print(TRIGGER);Serial.print(" SWITCH: ");Serial.print(SWITCH);Serial.print(" B_UP: ");Serial.print(B_UP);Serial.print(" B_DOWN: ");Serial.println(B_DOWN);
-
+  }
 
 }
 

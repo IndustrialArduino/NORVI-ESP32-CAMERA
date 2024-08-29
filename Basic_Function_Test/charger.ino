@@ -13,7 +13,7 @@ unsigned int read_register(byte reg_addr){
     registerValue = Wire.read(); // Read the byte
    
   } else {
-    Serial.println("Error: No response from device");
+    //Serial.println("Error: No response from device");
   }
   return registerValue;
 }
@@ -46,8 +46,9 @@ void read_status(){
   bit7 = (status_reg0 & 0b10000000) > 0;
 
 
-  Serial.print(" VIN: ");Serial.print(bit0);Serial.print(" THM: ");Serial.print(bit1);Serial.print(" DPM: ");Serial.print(bit2);Serial.print(" PPM: ");Serial.print(bit3);Serial.print(" ILIM: ");Serial.print(bit4);Serial.print(" CHG: ");Serial.print(bits56);Serial.print(" TS: ");Serial.print(bit7);
-
+  if(serial_enable==1){Serial.print(" VIN: ");Serial.print(bit0);Serial.print(" THM: ");Serial.print(bit1);Serial.print(" DPM: ");Serial.print(bit2);Serial.print(" PPM: ");Serial.print(bit3);Serial.print(" ILIM: ");Serial.print(bit4);Serial.print(" CHG: ");Serial.print(bits56);Serial.print(" TS: ");Serial.print(bit7);
+  }
+  
   bits34 = ((status_reg1 >> 3) & 0b00000011);
   
   bit0 = (status_reg1 & 0b00000001) > 0;
@@ -59,7 +60,9 @@ void read_status(){
   bit6 = (status_reg1 & 0b01000000) > 0;
   bit7 = (status_reg1 & 0b10000000) > 0;
 
-  Serial.print(" WK2: ");Serial.print(bit0);Serial.print(" WK1: ");Serial.print(bit1);Serial.print(" SFC: ");Serial.print(bit2);Serial.print(" TS: ");Serial.print(bits34);Serial.print(" BUV: ");Serial.print(bit6);Serial.print(" IOV: ");Serial.println(bit7);
+  if(serial_enable==1){
+    Serial.print(" WK2: ");Serial.print(bit0);Serial.print(" WK1: ");Serial.print(bit1);Serial.print(" SFC: ");Serial.print(bit2);Serial.print(" TS: ");Serial.print(bits34);Serial.print(" BUV: ");Serial.print(bit6);Serial.print(" IOV: ");Serial.println(bit7);
+  }
   
   
  
@@ -67,12 +70,12 @@ void read_status(){
 
 
 void config_charger(){
-  write_register(CGCTRL_REG_ADDR, 0x50);  Serial.println("Charging Current Set to 530mA");
+  write_register(CGCTRL_REG_ADDR, 0x50);  //Serial.println("Charging Current Set to 530mA");
   delay(100);
-  write_register(IC_CTRL, 0x04);  Serial.println("Disable TS Auto");
-  write_register(TMR_ILIM, 0x0D);  Serial.println("Push button Long Press to 5s");
+  write_register(IC_CTRL, 0x04);  //Serial.println("Disable TS Auto");
+  write_register(TMR_ILIM, 0x0D);  //Serial.println("Push button Long Press to 5s");
   delay(100);
-  write_register(SYS_REG, 0x40);  Serial.println("Writing to SYS CONTROL");
+  write_register(SYS_REG, 0x40);  //Serial.println("Writing to SYS CONTROL");
 }
 
 void I2C_Scan(){
