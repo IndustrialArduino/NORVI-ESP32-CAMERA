@@ -9,8 +9,8 @@
 // ===========================
 // Enter your WiFi credentials
 // ===========================
-const char* ssid = "**************";
-const char* password = "****************";
+const char* ssid = "ICONIC DEVICES (PVT) LTD";
+const char* password = "bb2057756";
 
 OV5640 ov5640 = OV5640();
 
@@ -99,7 +99,7 @@ void setup() {
   }
 
   
-  WiFi.setMinSecurity(WIFI_AUTH_WEP);
+  //WiFi.setMinSecurity(WIFI_AUTH_WEP);
   WiFi.mode(WIFI_STA);
   
 
@@ -107,6 +107,29 @@ void setup() {
   WiFi.disconnect(true);
   WiFi.begin(ssid, password);
   //WiFi.setSleep(false);
+
+    int n = WiFi.scanNetworks(); // Perform the WiFi scan
+  Serial.println("Scan complete.");
+
+  if (n == 0) {
+    Serial.println("No networks found.");
+  } else {
+    Serial.print(n);
+    Serial.println(" networks found:");
+    for (int i = 0; i < n; ++i) {
+      // Print the SSID, RSSI, and encryption type of each network
+      Serial.print(i + 1);
+      Serial.print(": ");
+      Serial.print(WiFi.SSID(i)); // Get the SSID of the scanned network
+      Serial.print(" (");
+      Serial.print(WiFi.RSSI(i)); // Get the RSSI (signal strength)
+      Serial.print(" dBm)");
+      Serial.print(" ");
+      Serial.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? "Open" : "Encrypted");
+      delay(10);  // Small delay between prints
+    }
+  }
+
 
  Serial.println("WiFi connecting..");
   while (WiFi.status() != WL_CONNECTED) {
