@@ -4,8 +4,10 @@
 #include <TFT_eSPI.h>
 #include <TJpg_Decoder.h>
 #include <Adafruit_ADS1X15.h>
+#include "ESP32_OV5640_AF.h"
 
 TFT_eSPI tft = TFT_eSPI();
+OV5640 ov5640 = OV5640();
 
 unsigned int menu_index=0;
 
@@ -37,6 +39,10 @@ ESP32QRCodeReader reader(CAMERA_MODEL_AI_THINKER);
 void onQrCodeTask(void *pvParameters)
 {
   struct QRCodeData qrCodeData;
+  String lastPayload = ""; // Variable to store the last seen payload
+  String currentPayload = ""; // Variable to store the last seen payload
+  unsigned long lastProcessedTime = millis(); // Timestamp of the last QR code processed
+  const unsigned long resetDelay = 10000; // 10 seconds delay to reset lastPayload
 
   while (true)
   {
@@ -48,23 +54,52 @@ void onQrCodeTask(void *pvParameters)
         Serial.print("Payload: ");
         Serial.println((const char *)qrCodeData.payload);
        
-
-       tft.fillRect(0, tft.height() - 30, tft.width(), 30, TFT_BLACK);
+        if(currentPayload!= lastPayload){
+            tft.fillRect(0, (tft.height() /2) - 25, tft.width(), 50, TFT_BLACK);
     
      
-      tft.setCursor(10, tft.height() - 30 + 5); // Adjust the coordinates as needed
-      tft.setTextColor(TFT_WHITE); // Set text color
-      tft.setTextSize(2); // Set text size
-      tft.print("QR: ");
-      tft.print((const char *)qrCodeData.payload);
-
+            tft.setCursor(10, (tft.height() /2) - 25 + 15); // Adjust the coordinates as needed
+            tft.setTextColor(TFT_WHITE); // Set text color
+            tft.setTextSize(2); // Set text size
+            tft.print("QR: ");
+            tft.print((const char *)qrCodeData.payload);
+            delay(2000);
+            tft.fillScreen(TFT_WHITE);
+            lastPayload = currentPayload;
+            lastProcessedTime = millis();
+         } 
       }
       else
       {
         Serial.print("Invalid: ");
         Serial.println((const char *)qrCodeData.payload);
+        currentPayload = (const char *)qrCodeData.payload;
+       
+        if(currentPayload!= lastPayload){
+
+             tft.fillRect(0, (tft.height() /2) - 25, tft.width(), 50, TFT_BLACK);
+  
+             tft.setCursor(10, (tft.height() /2) - 25 + 15); // Adjust the coordinates as needed
+             tft.setTextColor(TFT_WHITE); // Set text color
+             tft.setTextSize(2); // Set text size
+             tft.print("Invalid: ");
+             tft.print((const char *)qrCodeData.payload);
+             delay(2000);
+             tft.fillScreen(TFT_WHITE);
+             lastPayload = currentPayload;
+             lastProcessedTime = millis();
+         } 
       }
     }
+     if (currentPayload == lastPayload)
+        {
+          if (millis() - lastProcessedTime > resetDelay)
+           {
+         // Reset lastPayload after 10 seconds
+            lastPayload = "";
+            Serial.println("Last payload reset due to inactivity");
+            }
+      }
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }
 }
@@ -85,6 +120,17 @@ void setup()
   Serial.println("Begin on Core 1");
 
   xTaskCreate(onQrCodeTask, "onQrCode", 8192, NULL, 4, NULL);
+
+  sensor_t* sensor = esp_camera_sensor_get();
+  ov5640.start(sensor);                 // Initialize Autofocus
+
+  if (ov5640.focusInit() == 0) {
+    Serial.println("OV5640_Focus_Init Successful!");
+  }
+
+  if (ov5640.autoFocusMode() == 0) {
+    Serial.println("OV5640_Auto_Focus Successful!");
+  }
 }
 
 void loop()
