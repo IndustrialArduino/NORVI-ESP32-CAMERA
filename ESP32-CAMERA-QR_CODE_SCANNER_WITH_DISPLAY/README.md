@@ -25,10 +25,12 @@ This project demonstrates QR code scanning using an NORVI-ESP32 camera. The code
 ## Serial Output Example
 
 ```bash
-Found QRCode  
-Payload: https://example.com  
 OV5640_Focus_Init Successful!  
-OV5640_Auto_Focus Successful!  
+OV5640_Auto_Focus Successful!
+Setup QRCode Reader  
+Begin on Core 1  
+Found QRCode  
+Payload: https://norvi.lk  
 Last payload reset due to inactivity
 
 ```
