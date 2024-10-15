@@ -1,4 +1,4 @@
-# QR Code Scanner using ESP32
+# QR Code Scanner using ESP32 Camera
 
 This project demonstrates how to scan and decode QR codes using an ESP32 Camers. The code captures QR codes continuously and prints the decoded payload to the serial monitor.
 
